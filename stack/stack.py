@@ -39,10 +39,11 @@ class Stack:
         self.storage.append(value)
 
     def pop(self):
-        if self.__len__() is 0:
+        if len(self.storage) is 0:
             return None
         else:
             return self.storage.pop()
+
 
 # class Stack:
 #     def __init__(self):
@@ -60,3 +61,13 @@ class Stack:
 #             return None
 #         else:
 #             return self.storage.pop()
+
+# stack = (The) Last (item) In (is the) First (item) Out
+# 5 is the pringle closest to the top (last item added)
+pringles = [0, 1, 2, 3, 4, 5]
+# Someone eats a pringle
+pringles.pop()
+print(pringles)
+# Someone puts a pringle back on
+pringles.append(5)
+print(pringles)

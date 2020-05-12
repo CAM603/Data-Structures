@@ -80,12 +80,25 @@ class Queue:
 
 #     def enqueue(self, value):
 #         # adding to the end or tail
-#         self.storage.insert(0, value)
+#         self.storage.append(value)
 #         return self.storage
+
 
 #     def dequeue(self):
 #         # removing from the head/beginning
-#         if self.__len__() is 0:
+#         if len(self.storage) is 0:
 #             return None
 #         else:
-#             return self.storage.pop()
+#             return self.storage.pop(0)
+
+# queue = (The) First (item) In (is the) First (item) Out
+
+# This list is a line of people waiting for coffee
+# 0 is first in line, 5 is last in line
+waiting_list = [0, 1, 2, 3, 4, 5]
+# Someone else gets in line for coffee
+waiting_list.append(6)
+print(waiting_list)
+# The first person leaves after getting coffee
+waiting_list.pop(0)
+print(waiting_list)
