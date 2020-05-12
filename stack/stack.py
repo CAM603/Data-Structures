@@ -30,20 +30,51 @@ class Node:
 class Stack:
     def __init__(self):
         self.size = 0
-        self.storage = []
+        self.storage = None
 
     def __len__(self):
-        return len(self.storage)
+        return self.size
 
     def push(self, value):
-        self.storage.append(value)
+        # adding to the end or tail
+        # wrap value in a new node
+        new_node = Node(value)
+        # increase size
+        self.size += 1
+        # if the storage is None
+        if not self.storage:
+            self.storage = new_node
+        else:
+            # add new node to the last node
+            current = self.storage
+            while current.get_next() is not None:
+                current = current.get_next()
+            current.set_next(new_node)
 
     def pop(self):
-        if len(self.storage) is 0:
+        # Set current
+        current = self.storage
+        # If None
+        if not current:
             return None
         else:
-            return self.storage.pop()
-
+            # reduce size
+            self.size -= 1
+            # set previous to None
+            previous = None
+            while current.get_next() is not None:
+                # Set new previous node
+                # (it will be the current node now)
+                previous = current
+                # Set new current
+                # (Old currents next node)
+                current = current.get_next()
+            # Make previous the last node by setting its next node to None
+            if previous is not None:
+                previous.next_node = None
+            else:
+                self.storage = None
+            return current.get_value()
 
 # class Stack:
 #     def __init__(self):
@@ -57,10 +88,11 @@ class Stack:
 #         self.storage.append(value)
 
 #     def pop(self):
-#         if self.__len__() is 0:
+#         if len(self.storage) is 0:
 #             return None
 #         else:
 #             return self.storage.pop()
+
 
 # stack = (The) Last (item) In (is the) First (item) Out
 # 5 is the pringle closest to the top (last item added)
