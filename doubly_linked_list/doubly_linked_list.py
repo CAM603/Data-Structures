@@ -79,8 +79,11 @@ class DoublyLinkedList:
     Returns the value of the removed Node."""
 
     def remove_from_head(self):
+        # Capture value of node to remove
         value = self.head.value
+        # Use ListNode delete method
         self.delete(self.head)
+        # Return the value
         return value
 
     """Wraps the given value in a ListNode and inserts it 
@@ -110,25 +113,34 @@ class DoublyLinkedList:
     Returns the value of the removed Node."""
 
     def remove_from_tail(self):
+        # Capture value of node to remove
         value = self.tail.value
+        # Use ListNode delete method
         self.delete(self.tail)
+        # Return value
         return value
 
     """Removes the input node from its current spot in the 
     List and inserts it as the new head node of the List."""
 
     def move_to_front(self, node):
+        # If already the head
         if node is self.head:
             return
+        # Create a new head node with the old node's value with add_to_head method
         self.add_to_head(node.value)
+        # Delete the old node using this class's delete method
+        # to handle the case that the node is head or tail
         self.delete(node)
 
     """Removes the input node from its current spot in the 
     List and inserts it as the new tail node of the List."""
 
     def move_to_end(self, node):
+        # If already the tail
         if node is self.tail:
             return
+        # Create a new tail node with the old node's value with add_to_tail method
         self.add_to_tail(node.value)
         self.delete(node)
 
@@ -140,11 +152,15 @@ class DoublyLinkedList:
         self.length -= 1
         # Is this the only node?
         if self.head is self.tail:
+            # Remove pointer to head
             self.head = None
+            # Remove pointer to tail
             self.tail = None
         # If it is the head
         elif node is self.head:
+            # Reassign the head to the current heads next pointer
             self.head = node.next
+            # Use the delete method on the ListNode class
             node.delete()
         # If it is the tail
         elif node is self.tail:
@@ -152,6 +168,8 @@ class DoublyLinkedList:
             node.delete()
         # If it is in the middle
         else:
+            # Rearranges this ListNode's previous and next pointers
+            # accordingly, effectively deleting the ListNode
             node.delete()
 
     """Returns the highest value currently in the list"""
