@@ -125,8 +125,23 @@ class BSTNode:
     # Print all the values in order from low to high
     # Hint:  Use a recursive, depth first traversal
 
-    def in_order_print(self, node):
-        pass
+    def in_order_print(self, node=None):
+        node = self
+        if node.left:
+            node = node.left
+            self.in_order_print(node.left)
+            print(node.value)
+        if node.right:
+            node = node.right
+            self.in_order_print(node.right)
+        # to_visit = [node]
+        # while to_visit:
+        #     current = to_visit.pop(0)
+        #     print(current.value)
+        #     if current.right:
+        #         to_visit.append(current.right)
+        #     if current.left:
+        #         to_visit.append(current.left)
 
     # Print the value of every node, starting with the given node,
     # in an iterative breadth first traversal
@@ -154,10 +169,13 @@ def print_them(el):
     print(el)
 
 
-tree_node = BSTNode(6)
+tree_node = BSTNode(1)
 
-tree_node.insert(2)
-tree_node.insert(8)
-tree_node.insert(10)
 tree_node.insert(3)
-tree_node.for_each(print_them)
+tree_node.insert(2)
+tree_node.insert(5)
+tree_node.insert(8)
+tree_node.insert(6)
+tree_node.insert(7)
+tree_node.insert(4)
+tree_node.in_order_print()
