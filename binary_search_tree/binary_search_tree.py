@@ -44,14 +44,15 @@ class BSTNode:
         # # Invoke recursive function with BSTNode
         # return search(self)
 
+        # Check if incomming value is lesss than current value
         if value < self.value:
             if self.left is not None:
-                return self.left.insert(value)
+                self.left.insert(value)
             else:
                 self.left = BSTNode(value)
         elif value >= self.value:
             if self.right is not None:
-                return self.right.insert(value)
+                self.right.insert(value)
             else:
                 self.right = BSTNode(value)
 
@@ -105,20 +106,69 @@ class BSTNode:
         else:
             return self.value
 
+    def iterative_get_max(self):
+        current_max_value = self.value
+
+        current = self
+        # Traverse our structure
+        while current is not None:
+            if current.value > current_max_value:
+                current_max_value = current.value
+            # Update current_max_value if we see a larger value
+            current = current.right
+
+        return current_max_value
+
     # Call the function `fn` on the value of each node
+    # This is DEPTH FIRST, LIFO
+    # def for_each(self, fn):
+    #     # def do_each(node):
+    #     #     fn(node.value)
+    #     #     if node.right is not None:
+    #     #         do_each(node.right)
+    #     #     if node.left is not None:
+    #     #         do_each(node.left)
+    #     # return do_each(self)
+
+    #     # Call passed in function
+    #     # If there is a right child
+    #     fn(self.value)
+    #     if self.right is not None:
+    #         # Call passed in function
+    #         self.right.for_each(fn)
+    #     # If there is a left child
+    #     if self.left is not None:
+    #         # Call passed in function
+    #         self.left.for_each(fn)
+
+    # ITERATIVE FOR EACH (NEEDS A STACK)
+    # This is DEPTH FIRST, LIFO
+    # def for_each(self, fn):
+    #     stack = []
+    #     # Add root node
+    #     stack.append(self)
+    #     # Loop so long as the stack still has elements
+    #     while stack:
+    #         current = stack.pop()
+    #         if current.left:
+    #             stack.append(current.left)
+    #         if current.right:
+    #             stack.append(current.right)
+    #         fn(current.value)
+
+    # This is BREADTH FIRST, FIFO
     def for_each(self, fn):
-        # def do_each(node):
-        #     fn(node.value)
-        #     if node.right is not None:
-        #         do_each(node.right)
-        #     if node.left is not None:
-        #         do_each(node.left)
-        # return do_each(self)
-        fn(self.value)
-        if self.right is not None:
-            self.right.for_each(fn)
-        if self.left is not None:
-            self.left.for_each(fn)
+        queue = []
+        # Add root node
+        queue.append(self)
+        # Loop so long as the queue still has elements
+        while queue:
+            current = queue.pop(0)
+            if current.left:
+                queue.append(current.left)
+            if current.right:
+                queue.append(current.right)
+            fn(current.value)
 
     # Part 2 -----------------------
 
@@ -202,7 +252,8 @@ tree_node.insert(6)
 tree_node.insert(3)
 tree_node.insert(4)
 tree_node.insert(2)
-tree_node.in_order_print(tree_node)
+tree_node.for_each(print_them)
+# tree_node.in_order_print(tree_node)
 # 1,2,3,4,5,6,7,8
 # tree_node.bft_print(tree_node)
 # 1,8,5,3,7,2,4,6,
@@ -210,5 +261,5 @@ tree_node.in_order_print(tree_node)
 # 1,8,5,7,3,6,4,2,
 # tree_node.dft_print(tree_node)
 # 1,8,5,7,6,3,4,2,
-# or
+# OR
 # 1,8,5,3,2,4,7,6,
