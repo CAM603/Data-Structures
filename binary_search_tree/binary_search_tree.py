@@ -121,25 +121,25 @@ class BSTNode:
 
     # Call the function `fn` on the value of each node
     # This is DEPTH FIRST, LIFO
-    # def for_each(self, fn):
-    #     # def do_each(node):
-    #     #     fn(node.value)
-    #     #     if node.right is not None:
-    #     #         do_each(node.right)
-    #     #     if node.left is not None:
-    #     #         do_each(node.left)
-    #     # return do_each(self)
+    def for_each(self, fn):
+        # def do_each(node):
+        #     fn(node.value)
+        #     if node.right is not None:
+        #         do_each(node.right)
+        #     if node.left is not None:
+        #         do_each(node.left)
+        # return do_each(self)
 
-    #     # Call passed in function
-    #     # If there is a right child
-    #     fn(self.value)
-    #     if self.right is not None:
-    #         # Call passed in function
-    #         self.right.for_each(fn)
-    #     # If there is a left child
-    #     if self.left is not None:
-    #         # Call passed in function
-    #         self.left.for_each(fn)
+        # Call passed in function
+        # If there is a right child
+        fn(self.value)
+        if self.right is not None:
+            # Call passed in function
+            self.right.for_each(fn)
+        # If there is a left child
+        if self.left is not None:
+            # Call passed in function
+            self.left.for_each(fn)
 
     # ITERATIVE FOR EACH (NEEDS A STACK)
     # This is DEPTH FIRST, LIFO
@@ -157,18 +157,18 @@ class BSTNode:
     #         fn(current.value)
 
     # This is BREADTH FIRST, FIFO
-    def for_each(self, fn):
-        queue = []
-        # Add root node
-        queue.append(self)
-        # Loop so long as the queue still has elements
-        while queue:
-            current = queue.pop(0)
-            if current.left:
-                queue.append(current.left)
-            if current.right:
-                queue.append(current.right)
-            fn(current.value)
+    # def for_each(self, fn):
+    #     queue = []
+    #     # Add root node
+    #     queue.append(self)
+    #     # Loop so long as the queue still has elements
+    #     while queue:
+    #         current = queue.pop(0)
+    #         if current.left:
+    #             queue.append(current.left)
+    #         if current.right:
+    #             queue.append(current.right)
+    #         fn(current.value)
 
     # Part 2 -----------------------
 
@@ -232,11 +232,24 @@ class BSTNode:
 
     # Print Pre-order recursive DFT
     def pre_order_dft(self, node):
-        pass
+        print(node.value)
+        if self.left is not None:
+            # Call passed in function
+            self.left.pre_order_dft(self.left)
+        if self.right is not None:
+            # Call passed in function
+            self.right.pre_order_dft(self.right)
 
     # Print Post-order recursive DFT
     def post_order_dft(self, node):
-        pass
+
+        if self.left is not None:
+            # Call passed in function
+            self.left.post_order_dft(self.left)
+        if self.right is not None:
+            # Call passed in function
+            self.right.post_order_dft(self.right)
+        print(node.value)
 
 
 def print_them(el):
@@ -252,7 +265,7 @@ tree_node.insert(6)
 tree_node.insert(3)
 tree_node.insert(4)
 tree_node.insert(2)
-tree_node.for_each(print_them)
+# tree_node.for_each(print_them)
 # tree_node.in_order_print(tree_node)
 # 1,2,3,4,5,6,7,8
 # tree_node.bft_print(tree_node)
@@ -263,3 +276,7 @@ tree_node.for_each(print_them)
 # 1,8,5,7,6,3,4,2,
 # OR
 # 1,8,5,3,2,4,7,6,
+# tree_node.pre_order_dft(tree_node)
+# 1,8,5,3,2,4,7,6,
+tree_node.post_order_dft(tree_node)
+# 2,4,3,6,7,5,8,1,
