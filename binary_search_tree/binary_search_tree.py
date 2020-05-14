@@ -124,34 +124,58 @@ class BSTNode:
 
     # Print all the values in order from low to high
     # Hint:  Use a recursive, depth first traversal
-
-    def in_order_print(self, node=None):
-        node = self
+    # Using a STACK visit each node once, one layer at a time
+    # Create STACK
+    # Add root to STACK
+    # while STACK is not empty node = pop top of STACK
+    # DO THE THING (PRINT)
+    # Add children of node to stack
+    def in_order_print(self, node):
+        if node is None:
+            return
         if node.left:
-            node = node.left
-            self.in_order_print(node.left)
-            print(node.value)
+            node.left.in_order_print(node.left)
+        print(node.value)
         if node.right:
-            node = node.right
-            self.in_order_print(node.right)
-        # to_visit = [node]
-        # while to_visit:
-        #     current = to_visit.pop(0)
-        #     print(current.value)
-        #     if current.right:
-        #         to_visit.append(current.right)
-        #     if current.left:
-        #         to_visit.append(current.left)
+            node.right.in_order_print(node.right)
 
     # Print the value of every node, starting with the given node,
     # in an iterative breadth first traversal
+    # Using a QUEUE visit each node once, one layer at a time
+    # Create QUEUE
+    # Add root to queue
+    # While queue is not empty, node = pop head of queue
+    # DO THE THING (PRINT)
+    # Add children of root to queue
+    # Pop node off the queue
+
     def bft_print(self, node):
-        pass
+        queue = [node]
+        while queue:
+            current = queue.pop(0)
+            print(current.value)
+            if current.left:
+                queue.append(current.left)
+            if current.right:
+                queue.append(current.right)
 
     # Print the value of every node, starting with the given node,
     # in an iterative depth first traversal
+    # Using a STACK visit each node once, one layer at a time
+    # Create STACK
+    # Add root to STACK
+    # while STACK is not empty node = pop top of STACK
+    # DO THE THING (PRINT)
+    # Add children of node to stack
     def dft_print(self, node):
-        pass
+        stack = [node]
+        while stack:
+            current = stack.pop()
+            print(current.value)
+            if current.left:
+                stack.append(current.left)
+            if current.right:
+                stack.append(current.right)
 
     # Stretch Goals -------------------------
     # Note: Research may be required
@@ -171,11 +195,20 @@ def print_them(el):
 
 tree_node = BSTNode(1)
 
-tree_node.insert(3)
-tree_node.insert(2)
-tree_node.insert(5)
 tree_node.insert(8)
-tree_node.insert(6)
+tree_node.insert(5)
 tree_node.insert(7)
+tree_node.insert(6)
+tree_node.insert(3)
 tree_node.insert(4)
-tree_node.in_order_print()
+tree_node.insert(2)
+tree_node.in_order_print(tree_node)
+# 1,2,3,4,5,6,7,8
+# tree_node.bft_print(tree_node)
+# 1,8,5,3,7,2,4,6,
+# OR
+# 1,8,5,7,3,6,4,2,
+# tree_node.dft_print(tree_node)
+# 1,8,5,7,6,3,4,2,
+# or
+# 1,8,5,3,2,4,7,6,
