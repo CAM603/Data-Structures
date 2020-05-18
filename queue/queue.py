@@ -9,17 +9,233 @@ return elements in First In First Out order.
    Make sure the Queue tests pass.
 3. What is the difference between using an array vs. a linked list when 
    implementing a Queue?
+
+Stretch: What if you could only use instances of your Stack class to implement the Queue?
+    What would that look like? How many Stacks would you need? Try it!
 """
+
+
+# class Node:
+#     def __init__(self, value=None, next_node=None):
+#         self.value = value
+#         self.next_node = next_node
+
+#     def get_value(self):
+#         return self.value
+
+#     def get_next(self):
+#         return self.next_node
+
+#     def set_next(self, new_next):
+#         self.next_node = new_next
+
+
+# class Queue:
+#     def __init__(self):
+#         self.size = 0
+#         self.storage = None
+
+#     def __len__(self):
+#         return self.size
+
+#     def enqueue(self, value):
+#         # adding to the end or tail
+#         # wrap value in a new node
+#         new_node = Node(value)
+#         # increase size
+#         self.size += 1
+#         # if the storage is None
+#         if not self.storage:
+#             self.storage = new_node
+#         else:
+#             # add new node to the last node
+#             current = self.storage
+#             while current.get_next() is not None:
+#                 current = current.get_next()
+#             current.set_next(new_node)
+
+#     def dequeue(self):
+#         # removing from the head/beginning
+#         # if nothing stored
+#         if not self.storage:
+#             return None
+#         else:
+#             # reduce size
+#             self.size -= 1
+#             # capture value we want to return
+#             # we want value of the current node
+#             value = self.storage.get_value()
+#             # remove value at the head
+#             # update head
+#             self.storage = self.storage.get_next()
+#             return value
+
+# class Queue:
+#     def __init__(self):
+#         self.size = 0
+#         self.storage = []
+
+#     def __len__(self):
+#         return len(self.storage)
+
+#     def enqueue(self, value):
+#         # adding to the end or tail
+#         self.storage.append(value)
+#         return self.storage
+
+
+#     def dequeue(self):
+#         # removing from the head/beginning
+#         if len(self.storage) is 0:
+#             return None
+#         else:
+#             return self.storage.pop(0)
+class Node:
+    def __init__(self, value=None, next_node=None):
+        # the value at this linked list node
+        self.value = value
+        # reference to the next node in the list
+        self.next_node = next_node
+
+    def get_value(self):
+        return self.value
+
+    def get_next(self):
+        return self.next_node
+
+    def set_next(self, new_next):
+        # set this node's next_node reference to the passed in node
+        self.next_node = new_next
+
+
+class LinkedList:
+    def __init__(self):
+        # reference to the head of the list
+        self.head = None
+        # reference to the tail of the list
+        self.tail = None
+
+    def add_to_tail(self, value):
+        # wrap the input value in a node
+        new_node = Node(value, None)
+        # check if there is no head (i.e., the list is empty)
+        if not self.head:
+            # if the list is initially empty, set both head and tail to the new node
+            self.head = new_node
+            self.tail = new_node
+        # we have a non-empty list, add the new node to the tail
+        else:
+            # set the current tail's next reference to our new node
+            self.tail.set_next(new_node)
+            # set the list's tail reference to the new node
+            self.tail = new_node
+
+    def remove_head(self):
+        # return None if there is no head (i.e. the list is empty)
+        if not self.head:
+            return None
+        # if head has no next, then we have a single element in our list
+        if not self.head.get_next():
+            # get a reference to the head
+            head = self.head
+            # delete the list's head reference
+            self.head = None
+            # also make sure the tail reference doesn't refer to anything
+            self.tail = None
+            # return the value
+            return head.get_value()
+        # otherwise we have more than one element in our list
+        value = self.head.get_value()
+        # set the head reference to the current head's next node in the list
+        self.head = self.head.get_next()
+        return value
+
+    def remove_tail(self):
+        if not self.head:
+            return None
+        if self.head is self.tail:
+            value = self.head.get_value()
+            self.head = None
+            self.tail = None
+            return value
+        current = self.head
+        while current.get_next() is not self.tail:
+            current = current.get_next()
+        value = self.tail.get_value()
+        self.tail = current
+        return value
+
+    def contains(self, value):
+        if not self.head:
+            return False
+        # Recursive solution
+        # def search(node):
+        #   if node.get_value() == value:
+        #     return True
+        #   if not node.get_next():
+        #     return False
+        #   return search(node.get_next())
+        # return search(self.head)
+        # get a reference to the node we're currently at; update this as we traverse the list
+        current = self.head
+        # check to see if we're at a valid node
+        while current:
+            # return True if the current value we're looking at matches our target value
+            if current.get_value() == value:
+                return True
+            # update our current node to the current node's next node
+            current = current.get_next()
+        # if we've gotten here, then the target node isn't in our list
+        return False
+
+    def get_max(self):
+        if not self.head:
+            return None
+        # reference to the largest value we've seen so far
+        max_value = self.head.get_value()
+        # reference to our current node as we traverse the list
+        current = self.head.get_next()
+        # check to see if we're still at a valid list node
+        while current:
+            # check to see if the current value is greater than the max_value
+            if current.get_value() > max_value:
+                # if so, update our max_value variable
+                max_value = current.get_value()
+            # update the current node to the next node in the list
+            current = current.get_next()
+        return max_value
+
+
 class Queue:
     def __init__(self):
         self.size = 0
-        # self.storage = ?
-    
+        self.storage = LinkedList()
+
     def __len__(self):
-        pass
+        return self.size
 
     def enqueue(self, value):
-        pass
+        # adding to the end or tail
+        self.size += 1
+        self.storage.add_to_tail(value)
+        return self.storage
 
     def dequeue(self):
-        pass
+        # removing from the head/beginning
+        if self.size is 0:
+            return None
+        else:
+            self.size -= 1
+            return self.storage.remove_head()
+# queue = (The) First (item) In (is the) First (item) Out
+
+
+# This list is a line of people waiting for coffee
+# 0 is first in line, 5 is last in line
+waiting_list = [0, 1, 2, 3, 4, 5]
+# Someone else gets in line for coffee
+waiting_list.append(6)
+print(waiting_list)
+# The first person leaves after getting coffee
+waiting_list.pop(0)
+print(waiting_list)
